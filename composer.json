@@ -1,17 +1,22 @@
 {
-    "name": "fzed51/pdo-helper",
-    "description": "Helper pour faciliter l'initialisation d'objet PDO",
-    "type": "library",
-    "require": {
-        "ext-PDO": "*",
-        "php": "^7.1"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Fabien Sanchez",
-            "email": "fzed51@users.noreply.github.com"
-        }
-    ],
-    "minimum-stability": "stable"
+  "name": "fzed51/pdo-helper",
+  "description": "Helper pour faciliter l'initialisation d'objet PDO",
+  "type": "library",
+  "require": {
+    "ext-PDO": "*",
+    "php": "^7.1"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fabien Sanchez",
+      "email": "fzed51@users.noreply.github.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "Helper\\": "./src"
+    }
+  }
 }
