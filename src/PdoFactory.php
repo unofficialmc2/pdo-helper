@@ -11,6 +11,11 @@ use PDO;
 class PDOFactory
 {
 
+    // case du nom des champs (\PDO::CASE_UPPER | \PDO::CASE_LOWER)
+    public static $case = PDO::CASE_UPPER;
+    // mode de sortie des champs (\PDO::FETCH_OBJ | \PDO::FETCH_ASSOC)
+    public static $fetchMode = PDO::FETCH_OBJ;
+
     /**
      * Initialise par defaut les attribus du connecteur
      *
@@ -20,8 +25,8 @@ class PDOFactory
     static private function configPdo(PDO $pdo) : PDO
     {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-        $pdo->setAttribute(PDO::ATTR_CASE, PDO::CASE_UPPER);
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, self::$fetchMode);
+        $pdo->setAttribute(PDO::ATTR_CASE, self::$case);
         return $pdo;
     }
 
