@@ -55,7 +55,7 @@ class PDOFactory
     static public function sqlite(string $filename) : PDO
     {
         if (!file_exists($filename)) {
-            throw new InvalidArgumentException("Le fichier $filename n'a pas été trouvé! ");
+            throw new \InvalidArgumentException("Le fichier $filename n'a pas été trouvé! ");
         }
         $filename = realpath($filename);
         $pdo = new PDO('sqlite:' . $filename);
@@ -78,7 +78,7 @@ class PDOFactory
             $pdo->exec("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD'");
             $pdo->exec("ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH24:MI:SS'");
         } catch (\PDOException $ex) {
-            throw new RuntimeException("Impossible de modifier les formats de date de la base", 0, $ex);
+            throw new \RuntimeException("Impossible de modifier les formats de date de la base", 0, $ex);
         }
         return $pdo;
     }
