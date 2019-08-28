@@ -57,12 +57,14 @@ class PDOFactory
      * @param string $filename Chemin/de/la/base/de/donnee
      * @return PDO
      */
-    static public function sqlite(string $filename) : PDO
+    static public function sqlite(string $filename = ':memory:'): PDO
     {
-        if (!file_exists($filename)) {
-            throw new \InvalidArgumentException("Le fichier $filename n'a pas été trouvé! ");
+        if ($filename !== ':memory:') {
+            if (!file_exists($filename)) {
+                throw new \InvalidArgumentException("Le fichier $filename n'a pas été trouvé! ");
+            }
+            $filename = realpath($filename);
         }
-        $filename = realpath($filename);
         $pdo = new PDO('sqlite:' . $filename);
         return self::configPdo($pdo);
     }
