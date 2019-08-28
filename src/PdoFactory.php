@@ -22,7 +22,7 @@ class PDOFactory
      * @param PDO $pdo
      * @return PDO
      */
-    static private function configPdo(PDO $pdo) : PDO
+    static private function configPdo(PDO $pdo): PDO
     {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, self::$fetchMode);
@@ -41,7 +41,7 @@ class PDOFactory
      * @param string $charset  Charset utilisé (defaut : utf8)
      * @return PDO
      */
-    static public function mysql($host, $dbName, $username, $password, $port = 3306, $charset = 'utf8') : PDO
+    static public function mysql($host, $dbName, $username, $password, $port = 3306, $charset = 'utf8'): PDO
     {
         $dns = "mysql:host=$host;port=$port;dbname=$dbName;charset=$charset";
         // $options = array(
@@ -77,9 +77,12 @@ class PDOFactory
      * @param string $password Mot de passe du user oracle
      * @return PDO
      */
-    static public function oci(string $sid, string $user, string $password) : PDO
+    static public function oci(string $sid, string $user, string $password, string $charset = ''): PDO
     {
-        $pdo = new PDO("oci:dbname=$sid", $user, $password);
+        if(!empty($charset)){
+            $charset = ';charset=' . $charset;
+        }
+        $pdo = new PDO("oci:dbname=$sid$charset", $user, $password);
         $pdo = self::configPdo($pdo);
         try {
             $pdo->exec("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD'");
@@ -99,10 +102,9 @@ class PDOFactory
      * @param string $password Mot de passe du user postgres
      * @return PDO
      */
-    static public function pgsql(string $dbname, string $host, string $user, string $password) : PDO
+    static public function pgsql(string $dbname, string $host, string $user, string $password): PDO
     {
         $pdo = new PDO("pgsql:dbname=$dbname;host=$host", $user, $password);
         return self::configPdo($pdo);
     }
-
 }
