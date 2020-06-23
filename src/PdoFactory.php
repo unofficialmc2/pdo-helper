@@ -11,9 +11,15 @@ use PDO;
 class PDOFactory
 {
 
-    // case du nom des champs (\PDO::CASE_UPPER | \PDO::CASE_LOWER)
+    /**
+     * case du nom des champs (\PDO::CASE_UPPER | \PDO::CASE_LOWER)
+     * @var int
+     */
     public static $case = PDO::CASE_UPPER;
-    // mode de sortie des champs (\PDO::FETCH_OBJ | \PDO::FETCH_ASSOC)
+    /**
+     * mode de sortie des champs (\PDO::FETCH_OBJ | \PDO::FETCH_ASSOC)
+     * @var int
+     */
     public static $fetchMode = PDO::FETCH_OBJ;
 
     /**
@@ -22,7 +28,7 @@ class PDOFactory
      * @param PDO $pdo
      * @return PDO
      */
-    static private function configPdo(PDO $pdo): PDO
+    private static function configPdo(PDO $pdo): PDO
     {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, self::$fetchMode);
@@ -41,12 +47,12 @@ class PDOFactory
      * @param string $charset  Charset utilisé (defaut : utf8)
      * @return PDO
      */
-    static public function mysql($host, $dbName, $username, $password, $port = 3306, $charset = 'utf8'): PDO
+    public static function mysql($host, $dbName, $username, $password, $port = 3306, $charset = 'utf8'): PDO
     {
         $dns = "mysql:host=$host;port=$port;dbname=$dbName;charset=$charset";
         // $options = array(
         //     PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES $charset",
-        // ); 
+        // );
         $pdo = new PDO($dns, $username, $password);
         return self::configPdo($pdo);
     }
@@ -57,7 +63,7 @@ class PDOFactory
      * @param string $filename Chemin/de/la/base/de/donnee
      * @return PDO
      */
-    static public function sqlite(string $filename = ':memory:'): PDO
+    public static function sqlite(string $filename = ':memory:'): PDO
     {
         if ($filename !== ':memory:') {
             if (!file_exists($filename)) {
@@ -77,9 +83,9 @@ class PDOFactory
      * @param string $password Mot de passe du user oracle
      * @return PDO
      */
-    static public function oci(string $sid, string $user, string $password, string $charset = ''): PDO
+    public static function oci(string $sid, string $user, string $password, string $charset = ''): PDO
     {
-        if(!empty($charset)){
+        if (!empty($charset)) {
             $charset = ';charset=' . $charset;
         }
         $pdo = new PDO("oci:dbname=$sid$charset", $user, $password);
@@ -102,7 +108,7 @@ class PDOFactory
      * @param string $password Mot de passe du user postgres
      * @return PDO
      */
-    static public function pgsql(string $dbname, string $host, string $user, string $password): PDO
+    public static function pgsql(string $dbname, string $host, string $user, string $password): PDO
     {
         $pdo = new PDO("pgsql:dbname=$dbname;host=$host", $user, $password);
         return self::configPdo($pdo);
