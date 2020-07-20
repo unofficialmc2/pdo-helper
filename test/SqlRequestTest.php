@@ -8,7 +8,7 @@ declare(strict_types=1);
  * Time: 23:28
  */
 
-namespace Test\Helper;
+namespace Test;
 
 use Helper\SqlRequest;
 use PHPUnit\Framework\TestCase;
