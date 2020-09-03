@@ -91,6 +91,11 @@ class DbQuickUseTest extends TestCase
         $this->pdo->exec("INSERT INTO test (nom) VALUES ('a')");
         $this->pdo->exec("INSERT INTO test (nom) VALUES ('b')");
         $db = new DbQuickUse($this->pdo);
+        $nb = $db->countElement('test');
+        self::assertEquals(3, $nb);
+        $db->delete('test', ['nom' => 'c']);
+        $nb = $db->countElement('test');
+        self::assertEquals(2, $nb);
         $db->delete('test', []);
         $nb = $db->countElement('test');
         self::assertEquals(0, $nb);
