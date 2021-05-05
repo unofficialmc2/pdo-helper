@@ -101,16 +101,16 @@ class PDOFactory
 
     /**
      * Connecteur Postgresql
-     *
-     * @param string $dbname   Nom de la base de donnée
-     * @param string $host     Adresse du serveur
-     * @param string $user     User postgres
+     * @param string $dbname Nom de la base de donnée
+     * @param string $host Adresse du serveur
+     * @param string $user User postgres
      * @param string $password Mot de passe du user postgres
+     * @param int $port = 5432 Port du serveur
      * @return PDO
      */
-    public static function pgsql(string $dbname, string $host, string $user, string $password): PDO
+    public static function pgsql(string $dbname, string $host, string $user, string $password, int $port = 5432): PDO
     {
-        $pdo = new PDO("pgsql:dbname=$dbname;host=$host", $user, $password);
+        $pdo = new PDO("pgsql:dbname=$dbname;port=$port;host=$host", $user, $password);
         return self::configPdo($pdo);
     }
 }
