@@ -10,6 +10,8 @@ namespace Helper;
 
 use PDO;
 use PDOStatement;
+use RuntimeException;
+use UnderflowException;
 
 /**
  * Class DbQuickUse
@@ -232,8 +234,12 @@ class DbQuickUse
         $sql = "SELECT max($pk) FROM $table";
         $req = $this->pdo->query($sql);
         if ($req === false) {
-            throw new \RuntimeException('counting request could not be completed');
+            throw new RuntimeException('counting request could not be completed');
         }
-        return (int)$req->fetchColumn();
+        $lastPk = (int)$req->fetchColumn();
+        if ($lastPk === 0) {
+            throw new UnderflowException('there is no primary key');
+        }
+        return $lastPk;
     }
 }
