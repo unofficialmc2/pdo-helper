@@ -58,6 +58,8 @@ class DbQuickUse
         foreach ($where as $k => $v) {
             if (is_int($k)) {
                 $outWhere[] = $v;
+            } elseif (is_null($v)) {
+                $outWhere[] = $k . ' is null';
             } else {
                 $outWhere[] = $k . ' = ?';
             }
@@ -74,7 +76,7 @@ class DbQuickUse
     {
         $outWhereParams = [];
         foreach ($where as $k => $v) {
-            if (!is_int($k)) {
+            if (!is_int($k) && !is_null($v)) {
                 $outWhereParams[] = $v;
             }
         }

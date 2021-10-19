@@ -104,15 +104,16 @@ class DbQuickUseTest extends TestCase
     public function testSelect(): void
     {
         $this->pdo->exec("DELETE from test WHERE id >= 0");
-        $this->pdo->exec("INSERT INTO test (nom) VALUES ('c')");
         $this->pdo->exec("INSERT INTO test (nom) VALUES ('a')");
+        $this->pdo->exec("INSERT INTO test (nom) VALUES (null)");
         $this->pdo->exec("INSERT INTO test (nom) VALUES ('b')");
         $db = new DbQuickUse($this->pdo);
-        $res = $db->select(['nom'], 'test');
+        $res = $db->select(['*'], 'test', ['nom' => null]);
+
         self::assertIsArray($res);
-        self::assertCount(3, $res);
+        self::assertCount(1, $res);
         self::assertIsArray($res[0]);
-        self::assertArrayHasKey('nom', $res[0]);
+        self::assertArrayHasKey('id', $res[0]);
     }
 
 
@@ -123,7 +124,19 @@ class DbQuickUseTest extends TestCase
         $this->pdo->exec("INSERT INTO test (nom) VALUES ('a')");
         $this->pdo->exec("INSERT INTO test (nom) VALUES ('b')");
         $db = new DbQuickUse($this->pdo);
-        $res = $db->select(['nom'], 'test', ['nom'=>'a']);
+        $res = $db->select(['nom'], 'test', ['nom' => 'a']);
+        self::assertCount(1, $res);
+    }
+
+
+    public function testSelectWithWhereIsNull(): void
+    {
+        $this->pdo->exec("DELETE from test WHERE id >= 0");
+        $this->pdo->exec("INSERT INTO test (nom) VALUES ('c')");
+        $this->pdo->exec("INSERT INTO test (nom) VALUES ('a')");
+        $this->pdo->exec("INSERT INTO test (nom) VALUES ('b')");
+        $db = new DbQuickUse($this->pdo);
+        $res = $db->select(['nom'], 'test', ['nom' => 'a']);
         self::assertCount(1, $res);
     }
 
@@ -131,7 +144,7 @@ class DbQuickUseTest extends TestCase
     {
         $this->pdo->exec("DELETE from test WHERE id >= 0");
         $db = new DbQuickUse($this->pdo);
-        $db->insertInto('test', ['nom'=> 'a']);
+        $db->insertInto('test', ['nom' => 'a']);
         $nb = $db->countElement('test');
         self::assertEquals(1, $nb);
     }
