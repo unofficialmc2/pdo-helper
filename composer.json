@@ -1,5 +1,5 @@
 {
-  "name": "fzed51/pdo-helper",
+  "name": "unofficialmc2/pdo-helper",
   "description": "Helper pour faciliter l'initialisation d'objet PDO",
   "type": "library",
   "require": {
@@ -10,7 +10,7 @@
   "authors": [
     {
       "name": "Fabien Sanchez",
-      "email": "fzed51@users.noreply.github.com"
+      "email": "fabien.sanchez@arche-mc2.fr"
     }
   ],
   "minimum-stability": "stable",
